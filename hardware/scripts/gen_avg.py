@@ -14,7 +14,6 @@ import numpy as np
 import argparse
 
 ext = ('.csv')
-padding = ' ' + '.' * 25
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -23,7 +22,6 @@ parser.add_argument(
 )
 args = parser.parse_args()
 
-os.chdir("../results")
 os.chdir(args.folder)
 path = os.getcwd()
 print(path)
