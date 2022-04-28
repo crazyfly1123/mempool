@@ -146,16 +146,11 @@ static void mempool_radix2_butterfly_q16p(  int16_t *pSrc16,
     } /* groups loop end */
 
     twidCoefModifier = twidCoefModifier << 1U;
-    mempool_barrier(nPE);
+    mempool_partial_barrier(core_id, n2);
+    //mempool_barrier(nPE);
   } /* stages loop end */
 
-//if(core_id==0) {
-//  for(uint32_t i=0; i<N_RSAMPLES; i+=2) {
-//    printf("{%6d;%6d } \n", pSrc16[i], pSrc16[i+1]);
-//  }
-//  printf("Done PARALLEL!\n");
-//}
-//mempool_barrier(nPE);
+  mempool_barrier(nPE);
 
   n1 = n2;
   n2 = n2 >> 1;

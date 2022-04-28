@@ -13,7 +13,7 @@
 
 extern char l1_alloc_base;
 extern uint32_t atomic_barrier;
-extern uint32_t wake_up_reg;
+extern volatile uint32_t wake_up_reg;
 
 typedef uint32_t mempool_id_t;
 typedef uint32_t mempool_timer_t;

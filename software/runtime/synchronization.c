@@ -10,12 +10,17 @@
 #include "runtime.h"
 #include "synchronization.h"
 
-uint32_t volatile barrier __attribute__((section(".l1")));
+uint32_t volatile barrier                       __attribute__((section(".l1")));
+uint32_t volatile partial_barrier[NUM_CORES*4]  __attribute__((aligned(NUM_CORES*4),section(".l1")));
 
 void mempool_barrier_init(uint32_t core_id) {
   if (core_id == 0) {
     // Initialize the barrier
     barrier = 0;
+    //idx_core = 0;
+    for(uint32_t i=0; i<NUM_CORES*4; i++) {
+      partial_barrier[i] = 0;
+    }
     wake_up_all();
     mempool_wfi();
   } else {
@@ -33,4 +38,25 @@ void mempool_barrier(uint32_t num_cores) {
   // Some threads have not reached the barrier --> Let's wait
   // Clear the wake-up trigger for the last core reaching the barrier as well
   mempool_wfi();
+}
+
+void mempool_partial_barrier(uint32_t core_id, uint32_t num_partial_cores) {
+
+    uint32_t core_init = (num_partial_cores*(core_id/num_partial_cores));
+    if ( num_partial_cores-1 == __atomic_fetch_add(&partial_barrier[4*core_init], 1, __ATOMIC_RELAXED))
+    {
+      __atomic_store_n(&partial_barrier[core_init*4], 0, __ATOMIC_RELAXED);
+      __sync_synchronize(); // Full memory barrier
+      uint32_t idx_core = core_init;
+      while(idx_core < core_init+num_partial_cores) {
+        if(core_id != idx_core) {
+          wake_up(idx_core);
+        }
+        idx_core++;
+      }
+
+    }
+    else
+      mempool_wfi();
+
 }
