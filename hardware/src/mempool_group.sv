@@ -403,6 +403,9 @@ module mempool_group
     axi_tile_req_t  tcdm_req;
     axi_tile_resp_t tcdm_resp;
 
+    logic backend_idle;
+    logic trans_complete;
+
     axi_dma_backend #(
       .DataWidth       (AxiDataWidth   ),
       .AddrWidth       (AddrWidth      ),
@@ -424,8 +427,8 @@ module mempool_group
       .burst_req_i      (dma_req_i[d]       ),
       .valid_i          (dma_req_valid_i[d] ),
       .ready_o          (dma_req_ready_o[d] ),
-      .backend_idle_o   (/*unused*/         ),
-      .trans_complete_o (/*unused*/         )
+      .backend_idle_o   (backend_idle       ),
+      .trans_complete_o (trans_complete     )
     );
 
     // ------------------------------------------------------
