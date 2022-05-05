@@ -178,6 +178,11 @@ package mempool_pkg;
     logic serialize;
   } dma_req_t;
 
+  typedef struct packed {
+    logic backend_idle;
+    logic trans_complete;
+  } dma_meta_t;
+
   /**********************************
    *  TCDM INTERCONNECT PARAMETERS  *
    **********************************/
