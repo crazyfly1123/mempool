@@ -30,7 +30,7 @@ module mempool_tb;
   localparam BootAddr = 0;
   `endif
 
-  localparam ClockPeriod = 1ns;
+  localparam ClockPeriod = 2ns;
   localparam TA          = 0.2ns;
   localparam TT          = 0.8ns;
 
@@ -51,7 +51,7 @@ module mempool_tb;
     clk   = 1'b1;
     rst_n = 1'b0;
 
-    repeat (5)
+    repeat (10)
       #(ClockPeriod);
 
     rst_n = 1'b1;
