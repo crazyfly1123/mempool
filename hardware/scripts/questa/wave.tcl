@@ -43,4 +43,13 @@ for {set group 0} {$group < [examine -radix dec /mempool_pkg::NumGroups]} {incr 
   }
 }
 
+add wave -position -Group DMA_midend /mempool_tb/dut/i_mempool_cluster/gen_groups[0]/i_group/i_idma_distributed_midend/NoMstPorts
+add wave -position -Group DMA_midend /mempool_tb/dut/i_mempool_cluster/gen_groups[0]/i_group/i_idma_distributed_midend/DmaRegionWidth
+add wave -position -Group DMA_midend /mempool_tb/dut/i_mempool_cluster/gen_groups[0]/i_group/i_idma_distributed_midend/DmaRegionStart
+add wave -position -Group DMA_midend /mempool_tb/dut/i_mempool_cluster/gen_groups[0]/i_group/i_idma_distributed_midend/DmaRegionEnd
+add wave -position -Group DMA_midend /mempool_tb/dut/i_mempool_cluster/gen_groups[0]/i_group/i_idma_distributed_midend/DmaRegionAddressBits
+add wave -position -Group DMA_midend /mempool_tb/dut/i_mempool_cluster/gen_groups[0]/i_group/i_idma_distributed_midend/FullRegionAddressBits
+
+add wave -Group DMA_midend /mempool_tb/dut/i_mempool_cluster/gen_groups[0]/i_group/i_idma_distributed_midend/*
+
 do ../scripts/questa/wave_cache.tcl 0 0 0
