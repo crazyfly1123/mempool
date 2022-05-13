@@ -155,4 +155,3 @@ void calc_axpy_parallel_unloop_x4_localbank(int32_t *matrix_X,
     AXPY_unloop_x4(alpha, &matrix_X[c], &matrix_Y[c]);
   }
 }
-
